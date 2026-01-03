@@ -1,14 +1,16 @@
 package com.penrouk.deadlinemod;
 
-import net.minecraft.resources.ResourceLocation;
+import com.penrouk.deadlinemod.entity.ModEntities;
+import com.penrouk.deadlinemod.entity.skeleton.KiteSkeleton;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Skeleton;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -41,6 +43,8 @@ public class DeadlineMod {
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
 
+        ModEntities.register(modEventBus);
+
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
@@ -48,37 +52,14 @@ public class DeadlineMod {
     private void commonSetup(FMLCommonSetupEvent event) {
     }
 
-    @SubscribeEvent
-    public void onMobSpawn(FinalizeSpawnEvent event) {
+    private void customSkeletonAI(FinalizeSpawnEvent event) {
+        Mob mob = event.getEntity();
 
-        // Used for testing. That way we can easily see log statements
-        if(event.getSpawnType() != MobSpawnType.SPAWN_EGG) {
+        if (!(mob instanceof Skeleton skeleton)) {
             return;
         }
 
-        Mob mob = event.getEntity();
-        AttributeMap attributeMap = mob.getAttributes();
-
-        int spawnDistance = (int)(Math.abs(event.getX()) + Math.abs(event.getZ()));
-
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(DeadlineMod.MOD_ID, "mob_scaling");
-
-        // Increase by 10% per 200 blocks starting at 2000 blocks away
-        // 2000 blocks can be either 2000,0 : 1750,250 : 1000:1000 etc
-        // Basic distance calculation to be efficient
-        System.out.println("Spawn Distance: " + spawnDistance);
-        double modifierAmount = ((double) Math.max(spawnDistance - 2000, 0) / 200) * 0.1;
-        System.out.println("Modifer Amount: " + modifierAmount);
-
-        if (modifierAmount >= 0) {
-            AttributeModifier modifier = new AttributeModifier(id, mob.getMaxHealth() * modifierAmount, AttributeModifier.Operation.ADD_VALUE);
-            AttributeInstance maxHealth = attributeMap.getInstance(Attributes.MAX_HEALTH);
-
-            if (maxHealth != null) {
-                maxHealth.addPermanentModifier(modifier);
-                mob.setHealth(event.getEntity().getMaxHealth());
-            }
-        }
+        skeleton.goalSelector.addGoal(0, new KitePlayerGoal(skeleton));
     }
 
     @SubscribeEvent

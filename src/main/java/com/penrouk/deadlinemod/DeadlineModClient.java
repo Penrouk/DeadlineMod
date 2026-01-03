@@ -1,6 +1,9 @@
 package com.penrouk.deadlinemod;
 
+import com.penrouk.deadlinemod.entity.ModEntities;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.SkeletonRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -27,5 +30,8 @@ public class DeadlineModClient {
         // Some client setup code
         DeadlineMod.LOGGER.info("HELLO FROM CLIENT SETUP");
         DeadlineMod.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
+        ModEntities.registerClient(event);
+        //EntityRenderers.register(ModEntities.KITE_SKELETON.get(), SkeletonRenderer::new);
     }
 }
