@@ -52,16 +52,6 @@ public class DeadlineMod {
     private void commonSetup(FMLCommonSetupEvent event) {
     }
 
-    private void customSkeletonAI(FinalizeSpawnEvent event) {
-        Mob mob = event.getEntity();
-
-        if (!(mob instanceof Skeleton skeleton)) {
-            return;
-        }
-
-        skeleton.goalSelector.addGoal(0, new KitePlayerGoal(skeleton));
-    }
-
     @SubscribeEvent
     public void onXpDrop(LivingExperienceDropEvent event) {
         int originalXp = event.getDroppedExperience();

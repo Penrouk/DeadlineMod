@@ -1,15 +1,16 @@
-package com.penrouk.deadlinemod;
+package com.penrouk.deadlinemod.entity.skeleton;
 
 import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
-
-public class KitePlayerGoal extends AvoidEntityGoal {
+class BullshitKitePlayerGoal extends AvoidEntityGoal {
     private Skeleton skeleton;
 
-    public KitePlayerGoal(Skeleton skeleton) {
+    public BullshitKitePlayerGoal(Skeleton skeleton) {
         super(skeleton, Player.class, 8, 1.6, 1.6, EntitySelector.NO_SPECTATORS);
         this.skeleton = skeleton;
     }
@@ -26,5 +27,17 @@ public class KitePlayerGoal extends AvoidEntityGoal {
         this.skeleton.lookAt(this.toAvoid, 30, 30);
         this.skeleton.performRangedAttack(this.toAvoid, 1);
         super.stop();
+    }
+}
+
+
+public class BullshitKiteSkeleton extends Skeleton {
+    public BullshitKiteSkeleton(EntityType<? extends Skeleton> entityType, Level level) {
+        super(entityType, level);
+    }
+
+    @Override
+    protected void registerGoals() {
+        this.goalSelector.addGoal(0, new BullshitKitePlayerGoal(this));
     }
 }

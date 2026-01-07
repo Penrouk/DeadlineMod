@@ -20,6 +20,24 @@ public class DifficultyTier {
         return adjustedDistance / blocksPer;
     }
 
+    @Override
+    public String toString() {
+        if (this.difficulty == Difficulty.TIER_0) {
+            return "Tier 0";
+        } else if (this.difficulty == Difficulty.TIER_1) {
+            return "Tier 1";
+        } else if (this.difficulty == Difficulty.TIER_2) {
+            return "Tier 2";
+        } else if (this.difficulty == Difficulty.TIER_3) {
+            return "Tier 3";
+        } else if (this.difficulty == Difficulty.TIER_4) {
+            return "Tier 4";
+        } else if (this.difficulty == Difficulty.TIER_5) {
+            return "Tier 5";
+        }
+        return "Tier ??";
+    }
+
     private Difficulty calculateDifficulty() {
         if (this.distance < 1000) {
             return Difficulty.TIER_0;

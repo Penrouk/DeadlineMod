@@ -1,18 +1,15 @@
 package com.penrouk.deadlinemod.util;
 
-import com.penrouk.deadlinemod.entity.ModEntities;
 import com.penrouk.deadlinemod.entity.TieredMob;
-import com.penrouk.deadlinemod.entity.skeleton.KiteSkeleton;
-import com.penrouk.deadlinemod.entity.skeleton.Tier0Skeleton;
 import com.penrouk.deadlinemod.entity.skeleton.TieredSkeleton;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class OverrideMobSpawn {
     private static final Map<Class<?>, TieredMob> MOB_MAP = new LinkedHashMap<>();
@@ -21,21 +18,23 @@ public class OverrideMobSpawn {
         MOB_MAP.put(Skeleton.class, new TieredSkeleton());
     }
 
-    public static void checkMobSpawnOverride(FinalizeSpawnEvent event) {
+    public static Mob checkMobSpawnOverride(FinalizeSpawnEvent event, DifficultyTier difficultyTier) {
         Mob mob = event.getEntity();
 
         for (Map.Entry<Class<?>, TieredMob> entry : MOB_MAP.entrySet()) {
             if (entry.getKey().isInstance(mob)) {
-                doSpawn(event, entry.getValue());
+                return doSpawn(event, entry.getValue(), difficultyTier);
             }
         }
+
+        return mob;
     }
 
-    private static void doSpawn(FinalizeSpawnEvent event, TieredMob tieredMob) {
+    private static Mob doSpawn(FinalizeSpawnEvent event, TieredMob tieredMob, DifficultyTier difficultyTier) {
         Mob originalMob = event.getEntity();
-        Supplier<EntityType<?>> supplier = getEntityTypeSupplier(event, tieredMob);
+        EntityType<?> entityType = getEntityType(difficultyTier, tieredMob);
 
-        Mob replacement = (Mob) supplier.get().create(originalMob.level());
+        Mob replacement = (Mob) entityType.create(originalMob.level());
         replacement.moveTo(
                 originalMob.getX(),
                 originalMob.getY(),
@@ -46,11 +45,12 @@ public class OverrideMobSpawn {
 
         originalMob.discard();
         event.getLevel().addFreshEntity(replacement);
+        replacement.finalizeSpawn(event.getLevel(), event.getDifficulty(), MobSpawnType.CONVERSION, null);
+        return replacement;
     }
 
-    private static Supplier<EntityType<?>> getEntityTypeSupplier(FinalizeSpawnEvent event, TieredMob tieredMob) {
-        DifficultyTier difficultyTier = new DifficultyTier((int) event.getX(), (int) event.getZ());
-        Supplier<EntityType<?>> supplier;
+    private static EntityType<?> getEntityType(DifficultyTier difficultyTier, TieredMob tieredMob) {
+        EntityType<?> supplier;
 
         if (difficultyTier.getDifficulty() == Difficulty.TIER_0) {
             supplier = tieredMob.getTier0();

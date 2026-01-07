@@ -13,27 +13,27 @@ public abstract class TieredMob {
     protected static Supplier<EntityType<?>> TIER_4;
     protected static Supplier<EntityType<?>> TIER_5;
 
-    public Supplier<EntityType<?>> getTier0() {
-        return TIER_0;
+    public EntityType<?> getTier0() {
+        return TIER_0.get();
     }
 
-    public Supplier<EntityType<?>> getTier1() {
-        return TIER_1;
+    public EntityType<?> getTier1() {
+        return TIER_1.get();
     }
 
-    public Supplier<EntityType<?>> getTier2() {
-        return TIER_2;
+    public EntityType<?> getTier2() {
+        return TIER_2.get();
     }
 
-    public Supplier<EntityType<?>> getTier3() {
-        return TIER_3;
+    public EntityType<?> getTier3() {
+        return TIER_3.get();
     }
 
-    public Supplier<EntityType<?>> getTier4() {
-        return TIER_4;
+    public EntityType<?> getTier4() {
+        return TIER_4.get();
     }
 
-    public Supplier<EntityType<?>> getTier5() {
-        return TIER_5;
+    public EntityType<?> getTier5() {
+        return TIER_5.get();
     }
 }

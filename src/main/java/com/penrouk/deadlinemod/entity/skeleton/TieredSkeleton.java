@@ -10,17 +10,37 @@ import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 
 public class TieredSkeleton extends TieredMob {
     public static void register() {
-        TIER_0 = ModEntities.ENTITY_TYPES.register("skeleton.tier_0", () -> EntityType.Builder.of(Tier0Skeleton::new, MobCategory.MONSTER).sized(0.6f, 1.95f).build("skeleton.tier_0"));
-        TIER_1 = ModEntities.ENTITY_TYPES.register("skeleton.tier_1", () -> EntityType.Builder.of(Tier1Skeleton::new, MobCategory.MONSTER).sized(0.6f, 1.95f).build("skeleton.tier_1"));
+        TIER_3 = ModEntities.ENTITY_TYPES.register("skeleton.tier_3", () -> EntityType.Builder.of(KiteSkeleton::new, MobCategory.MONSTER).sized(0.6f, 1.95f).build("skeleton.tier_0"));
+        TIER_5 = ModEntities.ENTITY_TYPES.register("skeleton.tier_5", () -> EntityType.Builder.of(BullshitKiteSkeleton::new, MobCategory.MONSTER).sized(0.6f, 1.95f).build("skeleton.tier_1"));
     }
 
     public static void registerClient() {
-        EntityRenderers.register(((EntityType<Tier0Skeleton>)TIER_0.get()), SkeletonRenderer::new);
-        EntityRenderers.register(((EntityType<Tier1Skeleton>)TIER_1.get()), SkeletonRenderer::new);
+        EntityRenderers.register(((EntityType<KiteSkeleton>)TIER_3.get()), SkeletonRenderer::new);
+        EntityRenderers.register(((EntityType<BullshitKiteSkeleton>)TIER_5.get()), SkeletonRenderer::new);
+    }
+
+    @Override
+    public EntityType<?> getTier0() {
+        return EntityType.SKELETON;
+    }
+
+    @Override
+    public EntityType<?> getTier1() {
+        return EntityType.SKELETON;
+    }
+
+    @Override
+    public EntityType<?> getTier2() {
+        return EntityType.SKELETON;
+    }
+
+    @Override
+    public EntityType<?> getTier4() {
+        return TIER_3.get();
     }
 
     public static void registerMobAttributes(EntityAttributeCreationEvent event) {
-        event.put((EntityType<Tier0Skeleton>)TIER_0.get(), Tier0Skeleton.createAttributes().build());
-        event.put((EntityType<Tier1Skeleton>)TIER_1.get(), Tier0Skeleton.createAttributes().build());
+        event.put((EntityType<KiteSkeleton>)TIER_3.get(), KiteSkeleton.createAttributes().build());
+        event.put((EntityType<BullshitKiteSkeleton>)TIER_5.get(), BullshitKiteSkeleton.createAttributes().build());
     }
 }
