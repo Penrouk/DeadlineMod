@@ -38,6 +38,10 @@ public class BullshitKiteSkeleton extends Skeleton {
 
     @Override
     protected void registerGoals() {
+        super.registerGoals();
         this.goalSelector.addGoal(0, new BullshitKitePlayerGoal(this));
     }
+
+    @Override
+    protected boolean isSunBurnTick() { return false; }
 }

@@ -35,6 +35,7 @@ public class KiteSkeleton extends Skeleton {
 
     @Override
     protected void registerGoals() {
+        super.registerGoals();
         this.goalSelector.addGoal(0, new KitePlayerGoal(this));
     }
 }
