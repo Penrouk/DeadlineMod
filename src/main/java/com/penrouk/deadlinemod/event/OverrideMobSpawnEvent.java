@@ -1,21 +1,41 @@
-package com.penrouk.deadlinemod.util;
+package com.penrouk.deadlinemod.event;
 
+import com.penrouk.deadlinemod.DeadlineMod;
 import com.penrouk.deadlinemod.entity.TieredMob;
 import com.penrouk.deadlinemod.entity.skeleton.TieredSkeleton;
+import com.penrouk.deadlinemod.util.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.monster.Skeleton;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class OverrideMobSpawn {
+@EventBusSubscriber(modid = DeadlineMod.MOD_ID)
+public class OverrideMobSpawnEvent {
     private static final Map<Class<?>, TieredMob> MOB_MAP = new LinkedHashMap<>();
 
     static {
         MOB_MAP.put(Skeleton.class, new TieredSkeleton());
+    }
+
+    @SubscribeEvent
+    public static void onFinalizeMobSpawn(FinalizeSpawnEvent event) {
+        System.out.println("FINALIZE MOB SPAWN");
+
+        DifficultyTier difficultyTier = new DifficultyTier((int)event.getX(), (int)event.getZ());
+
+        Mob newMob = checkMobSpawnOverride(event, difficultyTier);
+
+        // Stylize mob name
+        DifficultyMobNameChanger.stylizeMobName(newMob, difficultyTier);
+
+        // Modify their stats
+        DifficultyMobStatApplier.tweakMobStats(newMob, difficultyTier);
     }
 
     public static Mob checkMobSpawnOverride(FinalizeSpawnEvent event, DifficultyTier difficultyTier) {
