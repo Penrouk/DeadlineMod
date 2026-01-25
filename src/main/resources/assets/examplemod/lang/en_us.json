@@ -1,4 +1,9 @@
 {
   "entity.deadline_mod.skeleton.tier_3": "Skeleton",
-  "entity.deadline_mod.skeleton.tier_5": "Skeleton"
+  "entity.deadline_mod.skeleton.tier_5": "Skeleton",
+  "entity.deadline_mod.creeper.tier_1": "Creeper",
+  "entity.deadline_mod.creeper.tier_2": "Creeper",
+  "entity.deadline_mod.creeper.tier_3": "Creeper",
+  "entity.deadline_mod.creeper.tier_4": "Creeper",
+  "entity.deadline_mod.creeper.tier_5": "John Cena"
 }

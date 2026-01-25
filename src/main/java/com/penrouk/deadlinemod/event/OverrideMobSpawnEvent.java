@@ -2,11 +2,13 @@ package com.penrouk.deadlinemod.event;
 
 import com.penrouk.deadlinemod.DeadlineMod;
 import com.penrouk.deadlinemod.entity.TieredMob;
+import com.penrouk.deadlinemod.entity.creeper.TieredCreeper;
 import com.penrouk.deadlinemod.entity.skeleton.TieredSkeleton;
 import com.penrouk.deadlinemod.util.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -21,6 +23,7 @@ public class OverrideMobSpawnEvent {
 
     static {
         MOB_MAP.put(Skeleton.class, new TieredSkeleton());
+        MOB_MAP.put(Creeper.class, new TieredCreeper());
     }
 
     @SubscribeEvent

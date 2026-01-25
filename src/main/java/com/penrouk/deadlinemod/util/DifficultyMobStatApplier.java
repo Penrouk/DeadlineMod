@@ -65,7 +65,7 @@ public class DifficultyMobStatApplier {
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE
             );
         } else {
-            double modifier = difficultyTier.calculateTier5Multiplier(100) * 0.1;
+            double modifier = difficultyTier.calculateTier5Multiplier(100) * 0.01;
             return new AttributeModifier(
                     id,
                     1.5 + modifier,
@@ -139,7 +139,8 @@ public class DifficultyMobStatApplier {
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE
             );
         } else {
-            double modifier = difficultyTier.calculateTier5Multiplier(100) * 0.02;
+            double modifier = difficultyTier.calculateTier5Multiplier(100) * 0.01;
+            modifier = Math.min(modifier, 10);
             return new AttributeModifier(
                     id,
                     0.6 + modifier,
@@ -176,7 +177,7 @@ public class DifficultyMobStatApplier {
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE
             );
         } else {
-            double modifier = difficultyTier.calculateTier5Multiplier(100) * 0.03;
+            double modifier = difficultyTier.calculateTier5Multiplier(100) * 0.01;
             return new AttributeModifier(
                     id,
                     0.6 + modifier,

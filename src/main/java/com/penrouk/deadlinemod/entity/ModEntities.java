@@ -1,6 +1,7 @@
 package com.penrouk.deadlinemod.entity;
 
 import com.penrouk.deadlinemod.DeadlineMod;
+import com.penrouk.deadlinemod.entity.creeper.TieredCreeper;
 import com.penrouk.deadlinemod.entity.skeleton.TieredSkeleton;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
@@ -15,6 +16,7 @@ public class ModEntities {
 
     static {
         TieredSkeleton.register();
+        TieredCreeper.register();
     }
 
 
@@ -24,9 +26,11 @@ public class ModEntities {
 
     public static void registerClient(FMLClientSetupEvent event) {
         TieredSkeleton.registerClient();
+        TieredCreeper.registerClient();
     }
 
     public static void registerMobAttributes(EntityAttributeCreationEvent event) {
         TieredSkeleton.registerMobAttributes(event);
+        TieredCreeper.registerMobAttributes(event);
     }
 }

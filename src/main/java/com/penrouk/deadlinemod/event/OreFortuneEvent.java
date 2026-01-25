@@ -64,7 +64,6 @@ public class OreFortuneEvent {
                 modifiedTool
         );
 
-
         int fortuneCount = getNumberOfRepeatDrops(difficultyTier);
 
         for (ItemStack drop : drops) {
