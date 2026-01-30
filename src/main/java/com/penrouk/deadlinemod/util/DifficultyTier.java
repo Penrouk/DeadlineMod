@@ -56,15 +56,15 @@ public class DifficultyTier {
     }
 
     private Difficulty calculateDifficulty() {
-        if (this.distance < 2000) {
+        if (this.distance < 4000) {
             return Difficulty.TIER_0;
-        } else if (this.distance < 4000) {
-            return Difficulty.TIER_1;
         } else if (this.distance < 6000) {
-            return Difficulty.TIER_2;
+            return Difficulty.TIER_1;
         } else if (this.distance < 8000) {
+            return Difficulty.TIER_2;
+        } else if (this.distance < 10000) {
             return Difficulty.TIER_3;
-        } else if(this.distance < 10000) {
+        } else if(this.distance < 12000) {
             return Difficulty.TIER_4;
         } else {
             return Difficulty.TIER_5;

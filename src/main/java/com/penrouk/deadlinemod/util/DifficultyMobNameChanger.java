@@ -25,7 +25,7 @@ public class DifficultyMobNameChanger {
         mob.setCustomName(
                 Component.literal(difficultyTier + " " + existingName).withStyle(Style.EMPTY.withColor(colorRgb))
         );
-        mob.setCustomNameVisible(true);
+        //mob.setCustomNameVisible(true);
     }
 
     private static String getMobTierColor(DifficultyTier difficultyTier) {
