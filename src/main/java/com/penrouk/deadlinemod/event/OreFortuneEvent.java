@@ -20,17 +20,19 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @EventBusSubscriber(modid = DeadlineMod.MOD_ID)
 public class OreFortuneEvent {
     @SubscribeEvent
     public static void checkApplyFortune(BlockEvent.BreakEvent blockBreakEvent) {
-        System.out.println("CHECK APPLY FORTUNE");
         Player player = blockBreakEvent.getPlayer();
         if (player == null || player.isCreative()) {
             return;
         }
+
 
         Level level = (Level) blockBreakEvent.getLevel();
         BlockPos pos = blockBreakEvent.getPos();
@@ -85,7 +87,6 @@ public class OreFortuneEvent {
         } else {
             return 5 + (int)difficultyTier.calculateTier5Multiplier(1000);
         }
-
-
     }
+
 }

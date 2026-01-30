@@ -6,9 +6,6 @@ public class DifficultyTier {
     private final double distance;
 
     public DifficultyTier(int x, int z) {
-
-        //x = Math.min(x, 100000);
-        //z = Math.min(z, 100000);
         this.distance = Math.abs(x) + Math.abs(z);
         this.difficulty = this.calculateDifficulty();
     }
@@ -40,6 +37,22 @@ public class DifficultyTier {
             return "Tier " + tier;
         }
         return "Tier ??";
+    }
+
+    public int toInt() {
+        if (this.difficulty == Difficulty.TIER_0) {
+            return 0;
+        } else if (this.difficulty == Difficulty.TIER_1) {
+            return 1;
+        } else if (this.difficulty == Difficulty.TIER_2) {
+            return 2;
+        } else if (this.difficulty == Difficulty.TIER_3) {
+            return 3;
+        } else if (this.difficulty == Difficulty.TIER_4) {
+            return 4;
+        } else {
+            return 5;
+        }
     }
 
     private Difficulty calculateDifficulty() {

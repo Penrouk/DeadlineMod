@@ -28,7 +28,6 @@ public class OverrideMobSpawnEvent {
 
     @SubscribeEvent
     public static void onFinalizeMobSpawn(FinalizeSpawnEvent event) {
-        System.out.println("FINALIZE MOB SPAWN");
 
         DifficultyTier difficultyTier = new DifficultyTier((int)event.getX(), (int)event.getZ());
 

@@ -1,6 +1,7 @@
 package com.penrouk.deadlinemod;
 
 import com.penrouk.deadlinemod.entity.ModEntities;
+import com.penrouk.deadlinemod.loot.ModLootModifiers;
 import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
 import org.slf4j.Logger;
 
@@ -26,28 +27,19 @@ public class DeadlineMod {
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public DeadlineMod(IEventBus modEventBus, ModContainer modContainer) {
-        // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
-
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
 
         ModEntities.register(modEventBus);
+        ModLootModifiers.register(modEventBus);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
-    private void commonSetup(FMLCommonSetupEvent event) {
-    }
 
-    @SubscribeEvent
-    public void onXpDrop(LivingExperienceDropEvent event) {
-        int originalXp = event.getDroppedExperience();
-        event.setDroppedExperience(originalXp * 50);
-    }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent

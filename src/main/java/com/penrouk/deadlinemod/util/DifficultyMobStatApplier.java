@@ -80,32 +80,32 @@ public class DifficultyMobStatApplier {
         if (difficultyTier.getDifficulty() == Difficulty.TIER_1) {
             return new AttributeModifier(
                     id,
-                    0.1,
+                    -0.1,
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE
             );
         } else if (difficultyTier.getDifficulty() == Difficulty.TIER_2) {
             return new AttributeModifier(
                     id,
-                    0.2,
+                    -0.2,
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE
             );
         } else if (difficultyTier.getDifficulty() == Difficulty.TIER_3) {
             return new AttributeModifier(
                     id,
-                    0.3,
+                    -0.3,
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE
             );
         } else if (difficultyTier.getDifficulty() == Difficulty.TIER_4) {
             return new AttributeModifier(
                     id,
-                    0.4,
+                    -0.4,
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE
             );
         } else {
             double modifier = difficultyTier.calculateTier5Multiplier(100) * 0.01;
             return new AttributeModifier(
                     id,
-                    0.5 + modifier,
+                    -0.5 - modifier,
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE
             );
         }
@@ -140,7 +140,7 @@ public class DifficultyMobStatApplier {
             );
         } else {
             double modifier = difficultyTier.calculateTier5Multiplier(100) * 0.01;
-            modifier = Math.min(modifier, 10);
+            modifier = Math.min(modifier, 3);
             return new AttributeModifier(
                     id,
                     0.6 + modifier,

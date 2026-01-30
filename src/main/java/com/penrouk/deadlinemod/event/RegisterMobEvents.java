@@ -16,8 +16,6 @@ import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 public class RegisterMobEvents {
     @SubscribeEvent
     public static void onModifyEntityAttributes(EntityAttributeModificationEvent event) {
-        System.out.println("MODIFY ENTITY ATTRIBUTES");
-
         for (EntityType<?> entityType : BuiltInRegistries.ENTITY_TYPE) {
             if (entityType.getCategory() == MobCategory.CREATURE) {
                 event.add((EntityType<? extends LivingEntity>) entityType, Attributes.ATTACK_DAMAGE);
@@ -27,8 +25,6 @@ public class RegisterMobEvents {
 
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
-        System.out.println("REGISTER ATTRIBUTES");
-
         ModEntities.registerMobAttributes(event);
     }
 }
